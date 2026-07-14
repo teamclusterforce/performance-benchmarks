@@ -9,17 +9,23 @@ and what actually costs frame time on them. That is what we tune the game agains
 The benchmark never sends anything on its own. Nothing is uploaded in the background, and
 there is no upload endpoint, no account link and no token in the game.
 
-At the end of a run the result screen offers **"Ergebnis beitragen (GitHub)"**. Pressing it
-opens GitHub's own web editor in the player's browser, with the report **already filled in**
-as text -- the report travels inside the link, so there is no file to upload and nothing to
-pick from disk. GitHub then forks this repository for the player and turns their click on
-**"Propose new file"** into a pull request. Closing the tab sends nothing.
+At the end of a run the result screen offers **"Ergebnis beitragen"**. Pressing it asks for
+confirmation, then opens GitHub's **new-issue form** in the player's browser with the report
+**already filled in** as text -- the report travels inside the link, so there is nothing to
+upload and no file to pick from disk. One click on *Create* and it is in. Closing the tab
+sends nothing.
+
+Reports arrive as **issues**, not pull requests, and that is deliberate: GitHub only lets
+collaborators push a branch, so a pull request would force every contributor to **fork** this
+repository first -- a full copy of it in their account, for a two-kilobyte text file. That
+cannot be switched off; it is how GitHub works. Anyone logged in can open an issue in a public
+repository: no fork, no branch, no write access.
 
 So: **consent is the click, and the click happens in the player's own browser.** A player who
 never presses it never contributes anything.
 
-Contributions land in [`reports/`](reports/) as one JSON file per run, named
-`<timestamp>-<gpu>-cf<score>.json`.
+Each issue carries the report as a JSON block, with a title like
+`CF-SCORE 95 | NVIDIA GeForce RTX 3070 | 2026-07-14`.
 
 ## What a report contains
 
@@ -66,13 +72,13 @@ Reports are collected **only to make the game run better**: finding GPUs that fa
 cliff, checking whether a graphics feature is worth its frame time, and setting sane default
 quality presets. They are not used for anything else, and they are not sold or passed on.
 
-Pull requests are **picked up, evaluated and closed automatically on a schedule**. A closed
-pull request does not mean your run was thrown away -- it means it has been read. Because
-this is a public repository, every contributed report stays publicly visible in the pull
-request; that is deliberate, and it is the reason nothing personal goes into one.
+Report issues are **picked up, evaluated and closed automatically on a schedule**. A closed
+issue does not mean your run was thrown away -- it means it has been read. Because this is a
+public repository, every contributed report stays publicly visible in its issue; that is
+deliberate, and it is the reason nothing personal goes into one.
 
 ## Contributing without the button
 
-You can add a report by hand: take `benchmark-latest.json` from the client's user directory
-(Windows: `%APPDATA%\ClusterForce\Client\`) and open a pull request that adds it under
-`reports/`. Please do not edit the numbers -- an edited report is worse than no report.
+You can send a report by hand: take `benchmark-latest.json` from the client's user directory
+(Windows: `%APPDATA%\ClusterForce\Client\`) and open an issue with its contents in a `json`
+code block. Please do not edit the numbers -- an edited report is worse than no report.
