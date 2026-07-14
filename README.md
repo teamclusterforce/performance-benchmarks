@@ -30,14 +30,21 @@ instead of sixteen, is a *different measurement*, not a faster machine.
 | Field | Example |
 | --- | --- |
 | `cfScore` | overall score, `97` |
-| `client` | client version, `2026.07.10` |
-| `gpu`, `cpu`, `os` | `NVIDIA GeForce RTX 3070`, `AMD Ryzen 7 5700X3D 8-Core Processor`, `Windows` |
-| `window` | render resolution, `1920x1080` |
+| `benchmark` | benchmark version -- staging and score formula change over time, `2` |
+| `client`, `engine` | `2026.07.10`, `Godot 4.7-stable` |
+| `gpu`, `gpuVendor`, `gpuApi` | `NVIDIA GeForce RTX 3070`, `NVIDIA`, driver/API version |
+| `cpu`, `cpuThreads`, `ramMb` | `AMD Ryzen 7 5700X3D 8-Core Processor`, `16`, `65456` |
+| `os`, `window`, `refreshHz` | `Windows`, `1920x1080`, `120` |
+| `renderer`, `fullscreen`, `vsync` | `forward_plus`, `false`, `true` |
 | `settings` | render scale, MSAA, clouds, HD models, ocean quality, SSIL |
-| `fleetSkins` | how many glider models the build shipped (load context) |
-| `scenes` | per scene: average FPS, 1 % low, 0.1 % low, frames, score |
-| `costs` | cost analysis: FPS gained per feature switched off, per venue |
-| `secondsPerScene`, `time` | run length and UTC timestamp |
+| `fleetSkins` | how many glider models the build shipped (lean vs full) |
+| `scenes` | per scene: `key`, `venue`, `mode`, `gliders`, `chainBalls`, average FPS, 1 % low, 0.1 % low, frame times (`msAvg`, `msMedian`, `msBest`, `msWorst`), `stutters` (frames over 2x the median), `frames`, `score` |
+| `costs` | cost analysis per venue: `key` of the feature switched off, `base` and `fps` FPS |
+| `secondsPerScene`, `warmupSec`, `costSeconds`, `time` | run timing and UTC timestamp |
+
+The scene entries carry what was STAGED, not just what came out: how many gliders flew, how
+many balls they hauled, which venue, which mode. A score without that context is not
+comparable -- and neither is one from a different `benchmark` version.
 
 ## What a report does NOT contain
 
